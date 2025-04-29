@@ -1,7 +1,8 @@
 export const mfConfig = {
   name: "users",
   exposes: {
-    './UsersTestControl': './src/components/UsersTestControl.tsx'
+    './Welcome': './src/components/Welcome.tsx',
+    './UserLogin': './src/components/UserLogin.tsx',
   },
   filename: 'remoteEntry.js',
   shared: ["react", "react-dom"],

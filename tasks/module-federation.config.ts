@@ -1,7 +1,7 @@
 export const mfConfig = {
   name: "tasks",
   exposes: {
-    './TasksTestControl': './src/components/TasksTestControl.tsx'
+    './TaskList': './src/components/TaskList.tsx'
   },
   filename: 'remoteEntry.js',
   shared: ["react", "react-dom"],

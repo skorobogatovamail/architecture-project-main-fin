@@ -1,23 +1,37 @@
 import ReactDOM from "react-dom/client";
 import { lazy } from 'react'
+import logo from './logo.svg';
+import './App.css';
 
 import "./index.css";
 
-const UsersTestControl = lazy(
-  () => import('users/UsersTestControl').catch(
-    () => ({ default: () => <div className="error">Component is not available</div> }))
+const Welcome = lazy(
+  () => import('users/Welcome')
+    .catch(() => ({ default: () => <div>Welcome is not available</div> }))
 )
 
-const TasksTestControl = lazy(
-  () => import('tasks/TasksTestControl').catch(
-    () => ({ default: () => <div>Component is not available</div> })
-  )
+const UserLogin = lazy(
+  () => import('users/UserLogin')
+    .catch(() => ({ default: () => <div>UserLogin is not available</div> }))
+)
+
+const TaskList = lazy(
+  () => import('tasks/TaskList')
+    .catch(() => ({ default: () => <div>TaskList is not available</div> }))
 )
 
 const App = () => (
-  <div className="container">
-    <UsersTestControl />
-    <TasksTestControl />
+  <div className="app">
+    <header className='App-header'>
+      <img src={logo} className='App-logo' alt='logo' />
+      Лабораторная работа по микрофронтендам
+    </header>
+
+    <section className='App-content'>
+      <Welcome />
+      <UserLogin />
+      <TaskList />
+    </section>
   </div>
 );
 
