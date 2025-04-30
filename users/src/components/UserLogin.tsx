@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import './UserLogin.css';
+import api from '../utils/api';
 
-export default function UserLogin({ onLogin }: { onLogin: (email: string, password: string) => void }) {
+export default function UserLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    function onLogin(name: string, password: string) {
+        // setJwt(api.login(name, password));
+        dispatchEvent(new CustomEvent('jwt-change', {
+            detail: api.login(name, password)
+        }))
+    }
 
     return (
         <div className='login-box'>

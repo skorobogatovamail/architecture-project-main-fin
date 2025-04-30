@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { lazy } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,20 +20,47 @@ const TaskList = lazy(
     .catch(() => ({ default: () => <div>TaskList is not available</div> }))
 )
 
-const App = () => (
-  <div className="app">
-    <header className='App-header'>
-      <img src={logo} className='App-logo' alt='logo' />
-      Лабораторная работа по микрофронтендам
-    </header>
+const App = () => {
+  const [jwt, setJwt] = useState('')
 
-    <section className='App-content'>
-      <Welcome />
-      <UserLogin />
-      <TaskList />
-    </section>
-  </div>
-);
+  const handleJwtChange = (event: CustomEvent<string>) => {
+    setJwt(event.detail)
+  }
+
+  useEffect(() => {
+    addEventListener('jwt-change', handleJwtChange)
+
+    return () => removeEventListener('jwt-change', handleJwtChange)
+  }, [])
+
+  return (
+    < div className="app" >
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
+        Лабораторная работа по микрофронтендам
+      </header>
+
+      <section className='App-content'>
+        {jwt ? (
+          <>
+            <Suspense>
+              <Welcome jwt={jwt} />
+            </Suspense>
+            <Suspense>
+              <TaskList jwt={jwt} />
+            </Suspense>
+
+          </>
+        ) : (
+          <Suspense>
+            <UserLogin />
+          </Suspense>
+
+        )}
+      </section>
+    </div >
+  )
+};
 
 const root = ReactDOM.createRoot(document.getElementById("app") as HTMLElement);
 
